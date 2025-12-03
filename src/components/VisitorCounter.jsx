@@ -3,9 +3,51 @@ import { Eye } from 'lucide-react'
 
 const VisitorCounter = () => {
   const [count, setCount] = useState(0)
-  const targetCount = 1234 // Số lượng visitors mục tiêu
+  const [targetCount, setTargetCount] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Lấy số lượng visitors từ API backend
+    const fetchVisitorCount = async () => {
+      try {
+        // Thay đổi URL này khi deploy
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const response = await fetch(`${API_URL}/api/visitor-count`)
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch')
+        }
+
+        const data = await response.json()
+        setTargetCount(data.count)
+        setLoading(false)
+      } catch (error) {
+        console.error('Failed to fetch visitor count:', error)
+
+        // Fallback: Sử dụng localStorage
+        const storedCount = localStorage.getItem('visitorCount')
+        const lastVisit = localStorage.getItem('lastVisit')
+        const today = new Date().toDateString()
+
+        let currentCount = storedCount ? parseInt(storedCount) : 1234
+
+        if (!lastVisit || lastVisit !== today) {
+          currentCount += 1
+          localStorage.setItem('visitorCount', currentCount.toString())
+          localStorage.setItem('lastVisit', today)
+        }
+
+        setTargetCount(currentCount)
+        setLoading(false)
+      }
+    }
+
+    fetchVisitorCount()
+  }, [])
+
+  useEffect(() => {
+    if (targetCount === 0 || loading) return
+
     // Animation đếm số
     let start = 0
     const duration = 2000 // 2 seconds
@@ -22,7 +64,7 @@ const VisitorCounter = () => {
     }, 16)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [targetCount, loading])
 
   return (
     <div className="group relative">
@@ -39,8 +81,8 @@ const VisitorCounter = () => {
 
           {/* Counter */}
           <div className="flex items-baseline gap-1">
-            <span className="text-sm font-bold bg-blue-400 bg-clip-text text-transparent tabular-nums">
-              {count.toLocaleString()}
+            <span className="text-sm font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent tabular-nums">
+              {loading ? '...' : count.toLocaleString()}
             </span>
             <span className="text-[10px] text-white/30 font-mono">views</span>
           </div>
