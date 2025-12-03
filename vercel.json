@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/server.js"
+    }
+  ],
+  "env": {
+    "GA_PROPERTY_ID": "@ga_property_id",
+    "GA_CLIENT_EMAIL": "@ga_client_email",
+    "GA_PRIVATE_KEY": "@ga_private_key"
+  }
+}
