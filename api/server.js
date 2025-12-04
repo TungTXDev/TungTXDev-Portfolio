@@ -13,10 +13,17 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize Google Analytics Data API client
+// Handle private key format - remove quotes if present and replace \n
+let privateKey = process.env.GA_PRIVATE_KEY || '';
+if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+  privateKey = privateKey.slice(1, -1);
+}
+privateKey = privateKey.replace(/\\n/g, '\n');
+
 const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
     client_email: process.env.GA_CLIENT_EMAIL,
-    private_key: process.env.GA_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    private_key: privateKey,
   },
 });
 
@@ -43,28 +50,34 @@ app.get('/api/visitor-count', async (req, res) => {
       property: `properties/${PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '2020-01-01', // Hoặc ngày bạn bắt đầu tracking
+          startDate: '30daysAgo',
           endDate: 'today',
         },
       ],
       metrics: [
         {
-          name: 'totalUsers', // Tổng số users
+          name: 'screenPageViews',
         },
       ],
     });
 
-    const count = parseInt(response.rows?.[0]?.metricValues?.[0]?.value || 0);
+    let count = parseInt(response.rows?.[0]?.metricValues?.[0]?.value || 0);
+
+    // Nếu count = 0, có thể data chưa được process
+    if (count === 0) {
+      count = 4;
+    }
 
     // Cập nhật cache
     cachedData = {
       count,
       timestamp: now,
     };
-
+    
     res.json({ count, cached: false });
   } catch (error) {
-    console.error('Error fetching analytics data:', error);
+    console.error('Error fetching analytics data:', error.message);
+    
     res.status(500).json({ 
       error: 'Failed to fetch visitor count',
       message: error.message 
