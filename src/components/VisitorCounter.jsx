@@ -10,7 +10,6 @@ const VisitorCounter = () => {
     // Lấy số lượng visitors từ API backend
     const fetchVisitorCount = async () => {
       try {
-        // Thay đổi URL này khi deploy
         const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
         const response = await fetch(`${API_URL}/api/visitor-count`)
 
@@ -19,25 +18,12 @@ const VisitorCounter = () => {
         }
 
         const data = await response.json()
-        setTargetCount(data.count)
+        setTargetCount(data.count || 0)
         setLoading(false)
       } catch (error) {
         console.error('Failed to fetch visitor count:', error)
-
-        // Fallback: Sử dụng localStorage
-        const storedCount = localStorage.getItem('visitorCount')
-        const lastVisit = localStorage.getItem('lastVisit')
-        const today = new Date().toDateString()
-
-        let currentCount = storedCount ? parseInt(storedCount) : 1234
-
-        if (!lastVisit || lastVisit !== today) {
-          currentCount += 1
-          localStorage.setItem('visitorCount', currentCount.toString())
-          localStorage.setItem('lastVisit', today)
-        }
-
-        setTargetCount(currentCount)
+        // Nếu API lỗi, hiển thị 0
+        setTargetCount(0)
         setLoading(false)
       }
     }
