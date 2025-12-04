@@ -15,6 +15,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import WeatherBackground from '@/components/WeatherBackground'
 import GameButton from '@/components/GameButton'
 import { WeatherProvider } from '@/contexts/WeatherContext'
+import ChatBot from '@/components/ChatBot'
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero')
@@ -53,6 +54,9 @@ function App() {
     <WeatherProvider>
       <WeatherBackground>
         <div className="min-h-screen relative">
+          {/* Scroll Monkey - Fixed left column */}
+          <ChatBot />
+
           {/* VS Code Background */}
           <CodeDecorations />
 
@@ -62,8 +66,8 @@ function App() {
           {/* Mobile Navigation */}
           <MobileNav activeSection={activeSection} onNavigate={handleNavigate} />
 
-          {/* Main Content */}
-          <main className="pt-12">
+          {/* Main Content - Add left padding for monkey column on desktop */}
+          <main className="pt-12 md:pl-24">
             <Hero />
             <ScrollReveal animation="fade-in-up">
               <Introduce />

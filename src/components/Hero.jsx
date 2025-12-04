@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import TypewriterText from '@/components/TypewriterText'
 import { TypewriterProvider } from '@/contexts/TypewriterContext'
 import { useWeather } from '@/contexts/WeatherContext'
+import PacmanTech from '@/components/PacmanTech'
 
 const Hero = () => {
   const { theme } = useWeather()
@@ -387,6 +388,9 @@ const Hero = () => {
           </div>
         </div>
       </section>
+
+      {/* Pacman eating tech icons */}
+      <PacmanTech />
     </TypewriterProvider>
   )
 }
