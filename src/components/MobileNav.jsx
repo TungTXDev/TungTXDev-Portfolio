@@ -26,7 +26,7 @@ const MobileNav = ({ activeSection, onNavigate }) => {
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 glass-effect border-b border-white/10">
         <div className="flex items-center justify-between px-4 py-4">
           <h1 className="text-xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Portfolio
+          TungTXDev  Portfolio
           </h1>
           <Button
             variant="ghost"
