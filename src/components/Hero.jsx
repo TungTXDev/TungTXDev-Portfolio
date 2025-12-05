@@ -196,7 +196,7 @@ const Hero = () => {
                 </h2>
 
                 <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white/90 mb-4 min-h-[2rem]">
-                  <TypewriterText text="Full Stack Developer" delay={60} />
+                  <TypewriterText text="Full-Stack Developer" delay={60} />
                 </h3>
 
                 {/* Short Description */}
