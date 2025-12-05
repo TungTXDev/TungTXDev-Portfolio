@@ -44,7 +44,7 @@ const Education = () => {
 
               {/* Content */}
               <div className={`ml-8 md:ml-0 md:w-[calc(50%-2rem)] ${index % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'}`}>
-                <div className="glass-card border-white/10 p-6 hover:border-white/20 transition-all">
+                <div className="glass-card rounded-xl border-white/10 p-6 hover:border-white/20 transition-all">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">

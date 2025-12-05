@@ -69,7 +69,7 @@ const Contact = () => {
             {contactInfo.map((info, index) => {
               const Icon = info.icon
               return (
-                <Card key={index} className="glass-card border-white/10 flex-1">
+                <Card key={index} className="glass-card border-white/10 flex-1 hover-lift">
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-4">
                       <div className={`p-3 rounded-lg bg-[#2d2d30] ${info.color}`}>
@@ -101,7 +101,7 @@ const Contact = () => {
             {socialLinks.map((social, index) => {
               const Icon = social.icon
               return (
-                <Card key={index} className="glass-card border-white/10 hover:border-purple-500 flex-1 transition-all">
+                <Card key={index} className="glass-card border-white/10 hover:border-purple-500 flex-1 transition-all hover-lift">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">

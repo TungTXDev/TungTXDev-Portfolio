@@ -70,7 +70,7 @@ const Skills = () => {
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill, i) => (
-                    <Badge key={i} className="text-sm px-3 py-1.5 bg-white/5 text-white/80 border-white/10 hover:bg-white/10 transition-all flex items-center gap-2">
+                    <Badge key={i} className="text-sm px-3 py-1.5 bg-white/5 text-white/80 border-white/10 hover:bg-white/10 transition-all flex items-center gap-2  hover-lift">
                       {skill.icon && (
                         <img
                           src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}`}

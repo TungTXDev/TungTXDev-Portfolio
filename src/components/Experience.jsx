@@ -45,7 +45,7 @@ const Experience = () => {
 
         <div className="space-y-6">
           {experiences.map((exp, index) => (
-            <Card key={index} className="glass-card border-white/10 hover-lift">
+            <Card key={index} className="glass-card border-white/10">
               <CardHeader>
                 <div className="flex items-start gap-4 mb-4">
                   {exp.logo && (
