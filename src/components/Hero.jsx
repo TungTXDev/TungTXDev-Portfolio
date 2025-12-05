@@ -272,28 +272,36 @@ const Hero = () => {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-nowrap sm:flex-wrap gap-4 overflow-x-auto no-scrollbar">
                 <a
                   href="https://tungtxdev.netlify.app/tungtxdev_resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-dark font-medium rounded-lg transition-all duration-300 transform  hover:scale-105 hover:shadow-lg hover:shadow-gray-400/50"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-dark font-medium rounded-lg 
+                 text-[12px] sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gray-400/50"
                 >
-                  <ExternalLink className="h-4 w-4" />
+                  <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
                   View my CV
                 </a>
 
                 <a
                   href="/resume/TungTXDev_Resume.pdf"
                   download="TungTXDev_Resume.pdf"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg 
+                 text-[12px] sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50"
                 >
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
                   </svg>
                   Download my CV
                 </a>
               </div>
+
             </div>
 
             {/* Right Side - Avatar with Orbiting Tech Icons */}
@@ -315,7 +323,10 @@ const Hero = () => {
                 <div className="absolute inset-0 animate-spin-slow md:hidden">
                   {techIcons.map((tech, index) => {
                     const angle = (index * 360) / techIcons.length
-                    const radius = 100
+                    const radius = typeof window !== 'undefined'
+                      ? Math.min(window.innerWidth * 0.4, 200)
+                      : 150
+
                     const x = Math.cos((angle * Math.PI) / 180) * radius
                     const y = Math.sin((angle * Math.PI) / 180) * radius
 

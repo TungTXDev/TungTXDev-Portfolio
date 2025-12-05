@@ -95,7 +95,11 @@ export default function PacmanTech() {
                         {[...Array(30)].map((_, i) => (
                             <div
                                 key={i}
-                                className="w-2 h-2 bg-yellow-300/60 rounded-full shadow-lg shadow-yellow-300/30"
+                                className="bg-yellow-300/60 rounded-full shadow-lg shadow-yellow-300/30"
+                                style={{
+                                    width: window.innerWidth < 640 ? '6px' : '8px',
+                                    height: window.innerWidth < 640 ? '6px' : '8px',
+                                }}
                             />
                         ))}
                     </div>
@@ -107,8 +111,13 @@ export default function PacmanTech() {
                     style={{
                         left: `${pacmanPosition.x}%`,
                         top: '50%',
-                        transform: `translate(-50%, -50%) ${direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)'}`,
+                        transform: `
+    translate(-50%, -50%)
+    scale(${window.innerWidth < 640 ? 0.6 : 1})
+    ${direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)'}
+  `,
                     }}
+
                 >
                     <svg width="64" height="64" viewBox="0 0 64 64" className="drop-shadow-2xl">
                         {/* Pacman body - Path động: full circle khi angle=0, mở symmetric khi angle>0 */}
@@ -140,10 +149,14 @@ export default function PacmanTech() {
                             style={{
                                 left: `${tech.x}%`,
                                 top: '50%',
-                                transform: `translate(-50%, -50%) scale(${isEaten ? 0 : 1})`,
+                                transform: `
+      translate(-50%, -50%)
+      scale(${isEaten ? 0 : window.innerWidth < 640 ? 0.65 : 1})
+    `,
                                 opacity: isEaten ? 0 : 1,
                             }}
                         >
+
                             <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center shadow-xl">
                                 <img
                                     src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}`}
