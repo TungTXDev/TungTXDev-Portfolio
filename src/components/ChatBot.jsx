@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Lightbulb, Users, MessageCircle, Zap, Clock, Wrench, Bot, Code, Gamepad2, Briefcase } from 'lucide-react'
 import Lottie from 'lottie-react'
 import botAnimation from '../animations/botAnimation.json'
+import TypewriterText from './TypewriterText'
 
 export default function ScrollMonkey() {
     const [showBubble, setShowBubble] = useState(false)
@@ -169,7 +170,9 @@ export default function ScrollMonkey() {
                         <div className="absolute top-1/2 left-full -translate-y-1/2 z-50">
                             <div className="relative bg-white rounded-2xl px-4 py-3 shadow-xl max-w-[18rem] w-[18rem] flex items-start gap-2">
                                 <TipIcon className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
-                                <div className="text-sm font-medium text-gray-800">{currentTip.text}</div>
+                                <div className="text-sm font-medium text-gray-800">
+                                    <TypewriterText text={currentTip.text} delay={30} loop={false} />
+                                </div>
                                 {/* Đuôi bong bóng - trỏ sang trái */}
                                 <div className="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-white rotate-45"></div>
                             </div>
