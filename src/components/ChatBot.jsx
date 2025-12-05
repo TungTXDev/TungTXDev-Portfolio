@@ -31,16 +31,16 @@ export default function ScrollMonkey() {
     }, [])
 
     const handleRobotClick = () => {
+        setShowModal(true)
+        setShowBubble(false)
+    }
+
+    const handleLightbulbClick = () => {
         const randomTip = portfolioTips[Math.floor(Math.random() * portfolioTips.length)]
         setCurrentTip(randomTip)
         setShowTip(true)
         setShowBubble(false)
         setTimeout(() => setShowTip(false), 4000)
-    }
-
-    const handleLightbulbClick = () => {
-        setShowModal(true)
-        setShowBubble(false)
     }
 
     const TipIcon = currentTip.icon
