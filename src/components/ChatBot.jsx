@@ -50,7 +50,7 @@ export default function ScrollMonkey() {
             {/* Mac Modal */}
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 pt-20">
-                    <div className="relative bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden" style={{ maxWidth: '1000px', width: '100%' }}>
+                    <div className="relative bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden" style={{ maxWidth: '900px', width: '100%' }}>
                         {/* Mac Title Bar */}
                         <div className="h-12 bg-[#323233] flex items-center px-4 border-b border-[#2d2d30]">
                             <div className="flex items-center gap-2">
