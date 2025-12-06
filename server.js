@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
-import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -14,11 +14,11 @@ app.use(express.json());
 
 // Initialize Google Analytics Data API client
 // Handle private key format - remove quotes if present and replace \n
-let privateKey = process.env.GA_PRIVATE_KEY || '';
+let privateKey = process.env.GA_PRIVATE_KEY || "";
 if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
   privateKey = privateKey.slice(1, -1);
 }
-privateKey = privateKey.replace(/\\n/g, '\n');
+privateKey = privateKey.replace(/\\n/g, "\n");
 
 const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
@@ -37,7 +37,7 @@ let cachedData = {
 const CACHE_DURATION = 5 * 60 * 1000; // 5 phút
 
 // Endpoint lấy số lượng visitors
-app.get('/api/visitor-count', async (req, res) => {
+app.get("/api/visitor-count", async (req, res) => {
   try {
     // Kiểm tra cache
     const now = Date.now();
@@ -50,15 +50,11 @@ app.get('/api/visitor-count', async (req, res) => {
       property: `properties/${PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '30daysAgo',
-          endDate: 'today',
+          startDate: "2020-01-01", // hoặc ngày bạn bắt đầu deploy
+          endDate: "today",
         },
       ],
-      metrics: [
-        {
-          name: 'screenPageViews',
-        },
-      ],
+      metrics: [{ name: "screenPageViews" }],
     });
 
     let count = parseInt(response.rows?.[0]?.metricValues?.[0]?.value || 0);
@@ -73,21 +69,21 @@ app.get('/api/visitor-count', async (req, res) => {
       count,
       timestamp: now,
     };
-    
+
     res.json({ count, cached: false });
   } catch (error) {
-    console.error('Error fetching analytics data:', error.message);
-    
-    res.status(500).json({ 
-      error: 'Failed to fetch visitor count',
-      message: error.message 
+    console.error("Error fetching analytics data:", error.message);
+
+    res.status(500).json({
+      error: "Failed to fetch visitor count",
+      message: error.message,
     });
   }
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {
