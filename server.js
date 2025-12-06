@@ -54,7 +54,7 @@ app.get("/api/visitor-count", async (req, res) => {
           endDate: "today",
         },
       ],
-      metrics: [{ name: "views" }],
+      metrics: [{ name: "screenPageViews" }],
     });
 
     let count = parseInt(response.rows?.[0]?.metricValues?.[0]?.value || 0);
