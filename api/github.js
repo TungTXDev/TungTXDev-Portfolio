@@ -41,7 +41,7 @@ query($username: String!) {
           }
         }
       }
-      commitContributionsByRepository(maxRepositories: 10) {
+      commitContributionsByRepository(maxRepositories: 100) {
         repository {
           name
           url
@@ -51,7 +51,7 @@ query($username: String!) {
           totalCount
         }
       }
-      repositoryContributions(first: 10) {
+      repositoryContributions(first: 100) {
         nodes {
           repository {
             name
@@ -68,7 +68,6 @@ query($username: String!) {
   }
 }
 `;
-
 
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
