@@ -27,24 +27,48 @@ router.get("/contributions", async (req, res) => {
     }
 
     const query = `
-      query($username: String!) {
-        user(login: $username) {
+query($username: String!) {
+  user(login: $username) {
+    name
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks {
+          contributionDays {
+            contributionCount
+            date
+            color
+          }
+        }
+      }
+      commitContributionsByRepository(maxRepositories: 10) {
+        repository {
           name
-          contributionsCollection {
-            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  contributionCount
-                  date
-                  color
-                }
-              }
+          url
+          isPrivate
+        }
+        contributions {
+          totalCount
+        }
+      }
+      repositoryContributions(first: 10) {
+        nodes {
+          repository {
+            name
+            url
+            createdAt
+            primaryLanguage {
+              name
+              color
             }
           }
         }
       }
-    `;
+    }
+  }
+}
+`;
+
 
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
@@ -59,9 +83,7 @@ router.get("/contributions", async (req, res) => {
     if (json.errors) throw new Error(json.errors[0].message);
 
     const data = json.data.user.contributionsCollection;
-
     githubCachedData = { data, timestamp: now };
-
     res.json({ ...data, cached: false });
   } catch (error) {
     console.error("Error fetching GitHub data:", error.message);
